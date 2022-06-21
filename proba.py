@@ -1,11 +1,11 @@
+import sys
 from tkinter import *
 import random
 import datetime
 import requests
-from pandas import DataFrame
-import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
+
 
 
 t_list = []
@@ -20,8 +20,6 @@ canvas.pack()
 figure_temp = Figure(figsize=(3, 2), dpi=100)
 plot_canvas_t = FigureCanvasTkAgg(figure_temp, tk)
 axes_t = figure_temp.add_subplot(111)
-axes_t.set_xlabel('Температура °C')
-axes_t.set_ylabel('Час')
 plot_canvas_t.get_tk_widget().place(x=0, y=90)
 
 
@@ -31,6 +29,26 @@ axes_h = figure_humi.add_subplot(111)
 axes_h.set_xlabel('Вологість hPa')
 axes_h.set_ylabel('Час')
 plot_canvas.get_tk_widget().place(x=320, y=90)
+
+
+def create():
+    win = Toplevel(tk)
+    win.title('Telegram')
+    qr = PhotoImage(file='qr_code.png')
+    qr =qr.subsample(7, 8)
+    lbl = Label(win)
+    lbl.image = qr
+    lbl['image'] = lbl.image
+    lbl.place(x=20,y=20)
+    c = Canvas(win, height=230, width=220)
+    win.resizable(width=False, height=False)
+    c.pack()
+    Label(win,image=qr).place(x=20,y =10)
+    Button(win, text = "Закрити вікно", command=win.destroy).place(x=70,y=190)
+
+img = PhotoImage(file='t_icon.png')
+w_icon = img.subsample(8, 8)
+but = Button(tk, image=w_icon, command=create, width=50, height=50).place(x=550,y=1)
 
 
 def data():
